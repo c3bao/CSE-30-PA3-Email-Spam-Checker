@@ -42,6 +42,10 @@ void testhash() {
     /*
      * TODO: YOU MUST WRITE MORE TEST CASES FOR FULL POINTS
      */
+
+    str = "testlowercase";
+    TEST( hash(str) == hashC(str) );
+
     //test odd length strings
     str = "CSE30";
     TEST( hash(str) == hashC(str) );

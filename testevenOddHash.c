@@ -81,7 +81,21 @@ void testevenOddHash() {
     hash = hash * HASH_PRIME + 'M';
 
     TEST( evenOddHash(str) == hash );
-    
+   
+    /* Test lower case string */
+    str = "cse30pa3";
+    hash = HASH_START_VAL;
+    hash = hash * HASH_PRIME + 'c';
+    hash = hash * HASH_PRIME + 'e';
+    hash = hash * HASH_PRIME + '0';
+    hash = hash * HASH_PRIME + 'a';
+    hash = hash * HASH_PRIME + 's';
+    hash = hash * HASH_PRIME + '3';
+    hash = hash * HASH_PRIME + 'p';
+    hash = hash * HASH_PRIME + '3';
+
+    TEST( evenOddHash(str) == hash );
+
 }
 
 int main() {

@@ -51,6 +51,10 @@ void testrevHash() {
     //test long string
     str = "IGOTREKTBYTHEMIDTERM";
     TEST( revHash(str) == revHashC(str) );
+
+    // Test Lower Case
+    str = "cse30pa3";
+    TEST( revHash(str) == revHashC(str) );
 }
 
 int main() {
