@@ -1,10 +1,10 @@
 /*
- * Filename: testrevHash
+ * Filename: testHash
  * Author: Chau Vu
  * Userid: cs30fgg
- * Description: Unit test program to test the function revHash().
- * Date: Nov 8, 2018
- * Sources of Help: Given file, PA2 writeup
+ * Description: Unit test program to test the function hash().
+ * Date: Nov 7, 2018
+ * Sources of Help: Given testhash tester
  */
 
 #include <string.h>
@@ -13,11 +13,11 @@
 #include "test.h"    /* For TEST() macro and stdio.h */
 #include "pa3.h"
 
-static int revHashC(char * str) {
+static int hashC(char * str) {
 
     int hash = HASH_START_VAL;
     int strLen = strlen(str);
-    for( int i = (strLen - 1); i >= 0; i-- ) {
+    for( int i = 0; i < strLen; i++ ) {
         hash = hash * HASH_PRIME + str[i];
     }
     return hash;
@@ -25,37 +25,40 @@ static int revHashC(char * str) {
 }
 
 /*
- * Unit Test for revHash.s
+ * Unit Test for hash.s
  *
- * long revHash( char * src );
+ * long hash( char * src );
  *
  */
-void testrevHash() {
+void testhash() {
 
     char * str = "ABCD";
     /* Validate the hash value. */
-    TEST( revHash(str) == revHashC(str) );
+    TEST( hash(str) == hashC(str) );
 
     str = "";
-    TEST( revHash(str) == revHashC(str) );
+    TEST( hash(str) == hashC(str) );
 
     /*
      * TODO: YOU MUST WRITE MORE TEST CASES FOR FULL POINTS
      */
+    //test odd length strings
     str = "CSE30";
-    TEST( revHash(str) == revHashC(str) );
+    TEST( hash(str) == hashC(str) );
 
     str = "PA3";
-    TEST( revHash(str) == revHashC(str) );
+    TEST( hash(str) == hashC(str) );
 
     //test long string
     str = "IGOTREKTBYTHEMIDTERM";
-    TEST( revHash(str) == revHashC(str) );
+    TEST( hash(str) == hashC(str) );
+
+
 }
 
 int main() {
-    fprintf( stderr, "Testing revHash...\n\n" );
-    testrevHash();
+    fprintf( stderr, "Testing hash...\n\n" );
+    testhash();
     fprintf( stderr, "\nDone running tests.\n" );
     return 0;
 }
