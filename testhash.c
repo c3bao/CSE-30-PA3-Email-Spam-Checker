@@ -43,8 +43,6 @@ void testhash() {
      * TODO: YOU MUST WRITE MORE TEST CASES FOR FULL POINTS
      */
 
-    str = "testlowercase";
-    TEST( hash(str) == hashC(str) );
 
     //test odd length strings
     str = "CSE30";
@@ -53,11 +51,12 @@ void testhash() {
     str = "PA3";
     TEST( hash(str) == hashC(str) );
 
+    str = "cse30pa3";
+    TEST( hash(str) == hashC(str) );
+
     //test long string
     str = "IGOTREKTBYTHEMIDTERM";
     TEST( hash(str) == hashC(str) );
-
-
 }
 
 int main() {
