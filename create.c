@@ -130,8 +130,7 @@ int main(int argc, char* argv[] ) {
     }
 
     // Missing either of infile flag or output flag
-    if( flagCounter == 0 ) {
-        printf("IN FLAGCOUNTER==0\n");
+    if( flagCounter != 2 ) {
         fprintf(stderr, ARG_ERR);
         fprintf(stderr, SHORT_CREATE_USAGE );
         return EXIT_FAILURE;
