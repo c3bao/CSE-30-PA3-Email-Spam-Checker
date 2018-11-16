@@ -40,7 +40,7 @@ void testpopulateTables() {
     table_t eotbl = {
         .hashFunction = evenOddHash,
         .size = size,
-        .llArray = malloc( size, sizeof(linkedList_t) )
+        .llArray = calloc( size, sizeof(linkedList_t) )
     };
 
     FILE * dataFile = fopen("emails_10", "rb");
@@ -54,7 +54,6 @@ void testpopulateTables() {
             }
         }
     }
-   // TEST( strcmp((eotbl.llArray[0])->value, "overstepped@spam.me") == 0 );
 }
 
 int main() {
