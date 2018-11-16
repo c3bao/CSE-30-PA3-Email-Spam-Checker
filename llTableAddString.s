@@ -68,7 +68,7 @@ llTableAddString:
         ldr     r0, [fp, TABLE_OFFSET]  @ Load table into r0
         ldr     r2, =ArrayOffset        @ Load offset of llArray
         ldr     r2, [r2]
-        ldr     r0, [r0, r2]            @ Load table->llArray
+        ldr     r0, [r0, r2]              @ Load address of table->llArray
         ldr     r3, [fp, IDX_OFFSET]    @ Load index into r3
         lsl     r3, r3, 2               @ convert index to bytes
         add     r0, r0, r3              @ Calculate &(table->llArray[index])

@@ -47,10 +47,9 @@ void testprependNode() {
     
     TEST( strcmp(head->value, "NEWEST") == 0);
     TEST( strcmp( (head->next)->value, "NEWER") == 0 );
-    TEST( strcmp((*(*head).next).value, "NEWER") == 0);
     TEST( strcmp(((head->next)->next)->value, "NEW") == 0 );
-    //freeLinkedList(llPtr); 
 
+    free(llPtr);
 }
 
 int main() {

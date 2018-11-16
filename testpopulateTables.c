@@ -40,13 +40,21 @@ void testpopulateTables() {
     table_t eotbl = {
         .hashFunction = evenOddHash,
         .size = size,
-        .llArray = malloc( sizeof(linkedList_t)* size )
+        .llArray = malloc( size, sizeof(linkedList_t) )
     };
 
     FILE * dataFile = fopen("emails_10", "rb");
     populateTables(&htbl, &rtbl, &eotbl, dataFile);
 
-     
+    for(int i = 0; i < eotbl.size; i++) {
+        if(eotbl.llArray[i] != NULL) {
+            printf("%s\n", eotbl.llArray[i]->value);
+            if(eotbl.llArray[i]->next != NULL) {
+                printf("%s\n", eotbl.llArray[i]->next->value);
+            }
+        }
+    }
+   // TEST( strcmp((eotbl.llArray[0])->value, "overstepped@spam.me") == 0 );
 }
 
 int main() {

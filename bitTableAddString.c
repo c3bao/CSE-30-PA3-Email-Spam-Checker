@@ -26,11 +26,12 @@
 void bitTableAddString( table_t *table , char *string) {
     
     int hash_key = table->hashFunction(string);
+    //printf("The hash key is: %d\n", hash_key);
     int table_size = table->size;
 
     int idx = ((hash_key % table_size) + table_size) % table_size;
-    char byte = *((*table).bitArray + (idx/8));
-    char bitMask = 1 << idx%8;
-    byte = byte | bitMask;
+    //printf("idx: %d\n", idx);i
+    table->bitArray[idx/8] |= (1 << (idx % 8));
+    //printf("bitArray: %d\n", *bitArray);
 }
 

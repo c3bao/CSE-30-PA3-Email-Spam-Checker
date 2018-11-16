@@ -56,6 +56,8 @@ typedef struct Table {
 #define INFILE_FLAG 'i'
 #define HELP_FLAG 'h'
 
+#define BASE 0
+
 // These macros combine to convert __LINE__ which is a number to a string,
 // then the preprocessor conctatenates all three to be file:lineNo for the 
 // OOM perror call.
