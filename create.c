@@ -51,7 +51,7 @@ static struct option getopt_longOpts[] = {
 int main(int argc, char* argv[] ) {
     int opt;
     int size;
-    int flagCounter;
+    int flagCounter;    // Keep track of inFile and outFile flags
     char* endptr;
     FILE * inFile;  // file with data
     FILE * outFile; // file to write to
@@ -68,7 +68,7 @@ int main(int argc, char* argv[] ) {
 
             case SIZE_FLAG:
                 errno = 0;
-                size = strtol(optarg, &endptr, BASE);
+                size = strtol(optarg, &endptr, BASE);   // Convert to long
 
                 // Check if size is a valid number
                 if(*endptr != '\0') {
@@ -100,6 +100,7 @@ int main(int argc, char* argv[] ) {
             case INFILE_FLAG:
                 errno = 0;
                 inFile = fopen( optarg, "rb");
+                // If fopen fails
                 if ( inFile == NULL ) {
                     perror(FILTER_ERR);
                     fprintf(stderr, SHORT_CREATE_USAGE );
@@ -111,6 +112,7 @@ int main(int argc, char* argv[] ) {
             case OUTPUT_FLAG:
                 errno = 0;
                 outFile = fopen( optarg, "wb");
+                // If fopen fails
                 if ( outFile == NULL ) {
                     perror(WTABLE_FILE_ERR);
                     fprintf(stderr, SHORT_CREATE_USAGE );
@@ -120,36 +122,34 @@ int main(int argc, char* argv[] ) {
                 break;
 
             default:
-                size = DEFAULT_SIZE;
-                // Missing either of infile flag or output flag
-                if( flagCounter == 0 ) {
-                    fprintf(stderr, ARG_ERR);
-                    fprintf(stderr, SHORT_CREATE_USAGE );
-                    return EXIT_FAILURE;
-                }
+                fprintf(stderr, SHORT_CREATE_USAGE );
+                return EXIT_FAILURE;
                 break;
         }
 
     }
-    /*
-       if(opterr != 0) {
-       printf("IN OPTERR\n");
-       fprintf(stderr, SHORT_CREATE_USAGE );
-       return EXIT_FAILURE;
-       }
-       */
 
+    // Missing either of infile flag or output flag
+    if( flagCounter == 0 ) {
+        printf("IN FLAGCOUNTER==0\n");
+        fprintf(stderr, ARG_ERR);
+        fprintf(stderr, SHORT_CREATE_USAGE );
+        return EXIT_FAILURE;
+    }
 
+    // If size isn't specified, set to DEFAULT_SIZE
     if(size == 0) {
         size = DEFAULT_SIZE;
     }
 
+    // If there's extra argument for a flag
     if(optind != argc) {
         fprintf(stderr, EXTRA_ARGS, argv[0] );
         fprintf(stderr, SHORT_CREATE_USAGE );
         return EXIT_FAILURE;
     }
 
+    // Hash Table
     table_t htbl = {
         .hashFunction = hash,
         .size = size,
@@ -165,12 +165,14 @@ int main(int argc, char* argv[] ) {
         return EXIT_FAILURE;
     }
 
+    // Reverse Table
     table_t rtbl = {
         .hashFunction = revHash,
         .size = size,
         .bitArray = calloc( sizeof(char), (size+7)/8 )
     };
 
+    // If calloc fails, free the memory and return
     if( rtbl.bitArray == NULL ) {
         perror(MEM_ERR);
         fprintf(stderr, SHORT_CREATE_USAGE );
@@ -178,12 +180,14 @@ int main(int argc, char* argv[] ) {
         return EXIT_FAILURE;
     }
 
+    // Even Odd Table
     table_t eotbl = {
         .hashFunction = evenOddHash,
         .size = size,
         .llArray = malloc( sizeof(linkedList_t *)*size )
     };
 
+    // If malloc fails, free memory and return
     if( eotbl.llArray == NULL ) {
         perror(MEM_ERR);
         fprintf(stderr, SHORT_CREATE_USAGE );
@@ -191,17 +195,22 @@ int main(int argc, char* argv[] ) {
         return EXIT_FAILURE;
     }
 
+    // Populate the tables using inFile
     populateTables(&htbl, &rtbl, &eotbl, inFile);
 
+    // write the tables to the outFile
     writeTables(outFile, &htbl, &rtbl, &eotbl);
 
+    // Close inFile and outFile
     fclose(inFile);
     fclose(outFile);
 
+    // Free the llArray
     for(int i = 0; i < eotbl.size; i++) {
         freeLinkedList(eotbl.llArray[i]);
     }
 
+    // Free the bitArrays
     free(htbl.bitArray);
     free(rtbl.bitArray);
 
