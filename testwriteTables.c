@@ -26,33 +26,44 @@ void testwriteTables() {
 
     long size = DEFAULT_SIZE;
 
+    // Initialize the hash table
     table_t htbl = {
         .hashFunction = hash,
         .size = size,
         .bitArray = calloc( sizeof(char), (size+7)/8 )
     };
 
+    // Initialize the reverse hash table
     table_t rtbl = {
         .hashFunction = revHash,
         .size = size,
         .bitArray = calloc( sizeof(char), (size+7)/8 )
     };
 
+    // Initialize the even odd hash table
     table_t eotbl = {
         .hashFunction = evenOddHash,
         .size = size,
         .llArray = malloc( sizeof(linkedList_t)*size )
     };
 
+    // Open the file to write to
     FILE * outFile = fopen("MYSOL", "wb");
+
+    // Open the file to read from
     FILE * dataFile = fopen("emails_all", "rb");
+
+    // Populate all three tables with dataFile
     populateTables(&htbl, &rtbl, &eotbl, dataFile);
  
+    // Write the contents of the tables to the outFile 
     writeTables(outFile, &htbl, &rtbl, &eotbl);
 
+    // Close the files I opened
     fclose(outFile);
     fclose(dataFile);
 
+    // Free the allocated memory
     for(int i = 0; i < eotbl.size; i++) {
         freeLinkedList(eotbl.llArray[i]);
     }

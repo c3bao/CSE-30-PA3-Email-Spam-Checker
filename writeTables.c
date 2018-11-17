@@ -36,10 +36,10 @@ void writeTables( FILE * outFile, table_t * htbl, table_t * rtbl,
     fwrite(&(htbl->size), sizeof(long), 1, outFile);
 
     // Write the entries of htbl
-    fwrite(htbl->bitArray, sizeof(char), (htbl->size+7)/8, outFile);
+    fwrite(htbl->bitArray, sizeof(char), (htbl->size+CEILING)/BITS, outFile);
 
     // Write the entries rtbl
-    fwrite(rtbl->bitArray, sizeof(char), (rtbl->size+7)/8, outFile);
+    fwrite(rtbl->bitArray, sizeof(char), (rtbl->size+CEILING)/BITS, outFile);
 
 
     // Write strings in each bucket of eotbl
@@ -54,17 +54,6 @@ void writeTables( FILE * outFile, table_t * htbl, table_t * rtbl,
 
         fputc('\0', outFile);
 
-        /*
-        if(currNode != NULL) {
-            fputs(currNode->value, outFile);
-            fputc('\0', outFile);
-
-            while(currNode->next != NULL) {
-                fputs(currNode->next->value, outFile);
-                fputc('\0', outFile);
-            }
-        }
-        */
     }
 
 }

@@ -23,18 +23,18 @@
  */
 void testpopulateTables() {
 
-    long size = MIN_SIZE;
+    long size = DEFAULT_SIZE;
 
     table_t htbl = {
         .hashFunction = hash,
         .size = size,
-        .bitArray = calloc( sizeof(char), (size+7)/8 )
+        .bitArray = calloc( sizeof(char), (size+CEILING)/BITS )
     };
 
     table_t rtbl = {
         .hashFunction = revHash,
         .size = size,
-        .bitArray = calloc( sizeof(char), (size+7)/8 )
+        .bitArray = calloc( sizeof(char), (size+CEILING)/BITS )
     };
 
     table_t eotbl = {
@@ -43,19 +43,26 @@ void testpopulateTables() {
         .llArray = calloc( size, sizeof(linkedList_t) )
     };
 
-    FILE * dataFile = fopen("emails_10", "rb");
+    // TEST EMAILS_10
+    FILE * dataFile = fopen("emails_1000", "rb");
     populateTables(&htbl, &rtbl, &eotbl, dataFile);
 
+    int count = 0;
+
+    // Check if all 10 emails are populated in llArray
     for(int i = 0; i < eotbl.size; i++) {
-        if(eotbl.llArray[i] != NULL) {
-            printf("%s\n", eotbl.llArray[i]->value);
-            if(eotbl.llArray[i]->next != NULL) {
-                printf("%s\n", eotbl.llArray[i]->next->value);
-            }
+        linkedList_t * currNode = eotbl.llArray[i];
+
+        while(currNode != NULL) {
+            printf("%s\n", currNode->value);
+            count++;
+            currNode = currNode->next;
         }
     }
-}
 
+    TEST(count == 1000);
+
+}
 int main() {
     fprintf( stderr, "Testing populateTables...\n\n" );
     testpopulateTables();

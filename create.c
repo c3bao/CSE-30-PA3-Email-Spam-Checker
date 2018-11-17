@@ -20,6 +20,8 @@
 #include <unistd.h>
 #include <getopt.h>
 
+#define correctFlag 2
+
 static struct option getopt_longOpts[] = {
     {
         LONG_SIZE_FLAG, optional_argument, 0, SIZE_FLAG
@@ -35,14 +37,17 @@ static struct option getopt_longOpts[] = {
 
     {
         LONG_OUTPUT_FLAG, required_argument, 0, OUTPUT_FLAG
-    }
+    },
+
+    {0, 0, 0, 0} // handle the case --h
 };
 
 
 /**
  *  Perform input checking by parsing the command line arguments and checking
- *  for errors. If all inputs are valid, it will display the BCD clock for a
- *  specified (or default) number of ticks.
+ *  for errors. If all inputs are valid, it will populate the hash tables using
+ *  an input file and write the contents of the tables to an output file that
+ *  the user specified.
  *  Otherwise, it will print the error message(s).
  *
  *  Return: EXIT_FAILURE if an error occurred
@@ -71,7 +76,7 @@ int main(int argc, char* argv[] ) {
                 size = strtol(optarg, &endptr, BASE);   // Convert to long
 
                 // Check if size is a valid number
-                if(*endptr != '\0') {
+                if(*endptr != NULL_TERMINATOR) {
                     fprintf(stderr, INVALID_NUM, optarg);
                     fprintf(stderr, SHORT_CREATE_USAGE );
                     return EXIT_FAILURE;
@@ -130,7 +135,7 @@ int main(int argc, char* argv[] ) {
     }
 
     // Missing either of infile flag or output flag
-    if( flagCounter != 2 ) {
+    if( flagCounter != correctFlag ) {
         fprintf(stderr, ARG_ERR);
         fprintf(stderr, SHORT_CREATE_USAGE );
         return EXIT_FAILURE;
@@ -152,7 +157,7 @@ int main(int argc, char* argv[] ) {
     table_t htbl = {
         .hashFunction = hash,
         .size = size,
-        .bitArray = calloc( sizeof(char), (size+7)/8 )
+        .bitArray = calloc( sizeof(char), (size+CEILING)/BITS )
     };
 
 

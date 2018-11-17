@@ -14,6 +14,7 @@
 #include "test.h"    /* For TEST() macro and stdio.h */
 #include "pa3.h"
 
+#define EVERY_OTHER 2
 /*  Function name: evenOddHash
  *  Function prototype: int evenOddHash( char * str )
  *  Description: Compute the hash key by iterating through the string by even,
@@ -30,12 +31,12 @@ int evenOddHash(char * str) {
     int strLen = strlen(str);
 
     // Loop through the even indices first
-    for( int i = 0; i < strLen; i+=2 ) {
+    for( int i = 0; i < strLen; i+=EVERY_OTHER ) {
         hash = hash * HASH_PRIME + str[i];
     }
 
     // Then loop through the odd indices
-    for( int i = 1; i < strLen; i+=2 ) {
+    for( int i = 1; i < strLen; i+=EVERY_OTHER ) {
         hash = hash * HASH_PRIME + str[i];
     }
     return hash;

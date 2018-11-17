@@ -57,6 +57,10 @@ typedef struct Table {
 #define HELP_FLAG 'h'
 
 #define BASE 0
+#define BITS 8
+#define CEILING 7
+#define NULL_TERMINATOR '\0'
+#define NEW_LINE '\n'
 
 // These macros combine to convert __LINE__ which is a number to a string,
 // then the preprocessor conctatenates all three to be file:lineNo for the 

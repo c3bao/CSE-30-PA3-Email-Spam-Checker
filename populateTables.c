@@ -33,13 +33,13 @@ void populateTables( table_t * htbl, table_t * rtbl, table_t * eotbl,
                      FILE * dataFile) {
 
     if( dataFile != NULL ) {
-        char line[BUFSIZ] = {'\0'};  //local char array
+        char line[BUFSIZ] = {NULL_TERMINATOR};  //local char array
         char *ptr = line;   
         // Get all the lines of the dataFile
         while(fgets( line, BUFSIZ, dataFile) != NULL ) {
             // Change \n to \0
-            char *newLinePtr = strchr(ptr, '\n');
-            *newLinePtr = '\0';
+            char *newLinePtr = strchr(ptr, NEW_LINE);
+            *newLinePtr = NULL_TERMINATOR;
             // Convert all characters to lower case
             for( int i = 0; i < strlen(line); i++) {
                 line[i] = tolower(line[i]);

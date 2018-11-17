@@ -33,21 +33,30 @@ void testprependNode() {
     prependNode(&head, str);
 
     TEST( strcmp(head->value, str) == 0);
+    TEST( strcmp((head->next)->value , "OLD") == 0 );
 
-    // TEST 2
+    // TEST PREPEND TWICE
     str = "NEWER";
     prependNode(&head, str);
 
     TEST( strcmp(head->value, "NEWER") == 0);
     TEST( strcmp((*(*head).next).value, "NEW") == 0);
 
-    // TEST 3
+    // TEST PREPEND THREE TIMES
     str = "NEWEST";
     prependNode(&head, str);
     
     TEST( strcmp(head->value, "NEWEST") == 0);
     TEST( strcmp( (head->next)->value, "NEWER") == 0 );
     TEST( strcmp(((head->next)->next)->value, "NEW") == 0 );
+
+    // TEST EMPTY STRING
+    str = "";
+    prependNode(&head, str);
+
+    TEST( strcmp(head->value, "") == 0);
+    TEST( strcmp( (head->next)->value, "NEWEST") == 0 );
+    TEST( strcmp(((head->next)->next)->value, "NEWER") == 0 );
 
     free(llPtr);
 }
