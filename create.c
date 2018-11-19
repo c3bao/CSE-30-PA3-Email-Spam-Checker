@@ -24,11 +24,11 @@
 
 static struct option getopt_longOpts[] = {
     {
-        LONG_SIZE_FLAG, optional_argument, 0, SIZE_FLAG
+        LONG_SIZE_FLAG, required_argument, 0, SIZE_FLAG
     },
 
     {
-        LONG_HELP_FLAG, optional_argument, 0, HELP_FLAG
+        LONG_HELP_FLAG, no_argument, 0, HELP_FLAG
     },
 
     {
