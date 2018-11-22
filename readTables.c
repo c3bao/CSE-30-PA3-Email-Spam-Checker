@@ -69,7 +69,6 @@ void readTables( FILE * inFile, table_t * htbl, table_t * rtbl,
 
     while( (numNewBytes = fread(buf + bufSize, 1,
                     BUFSIZ - bufSize, inFile)) > 0 ) {
-        //printf("BufSize:%d\n", bufSize);
         bufSize += numNewBytes;
         ptr = buf;      // Pointer to iterate
         strPtr = buf;   // Pointer used to keep track of strings
@@ -102,7 +101,6 @@ void readTables( FILE * inFile, table_t * htbl, table_t * rtbl,
                 }
             }
 
-        //printf("BufSize:%d\n", bufSize);
         }
 
         if( bufSize > 0 ) {
@@ -113,11 +111,3 @@ void readTables( FILE * inFile, table_t * htbl, table_t * rtbl,
    
 }
 
-                // If reach end of file and string is not null terminated,
-                // use memmove to move to the front of buf
-                /*
-                   if( index == sizeof(buf) && *ptr != NULL_TERMINATOR ) {
-                   memmove(buf, buf + (BUFSIZ - bufSize), bufSize );
-                   break;
-                   }
-                */
