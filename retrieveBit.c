@@ -26,16 +26,20 @@
  *
  */
 int retrieveBit( table_t *table , char *string) {
-    
+   
+    // Get the hash key of the string
     int hash_key = table->hashFunction(string);
-    //printf("The hash key is: %d\n", hash_key);
     int table_size = table->size;
 
+    // Generate an index with the hash key and the table size
     int idx = ((hash_key % table_size) + table_size) % table_size;
-    //printf("idx: %d\n", idx);
     
+    // AND the bitmask with the corresponding bit
     int bit = (table->bitArray[idx/BITS]) & (1 << (idx % BITS));
+
+    // Shift the bit to return
     bit = bit >> idx%BITS;
+
     return bit;
 }
 

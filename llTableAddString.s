@@ -2,9 +2,8 @@
  * File name: llTableAddString.s
  * Author: Chau Vu
  * ID: cs30fgg
- * Date: Oct 7, 2018
- * Description: Create the llTableAddString key of a string from str with a llTableAddStringing
- *              algorithm.
+ * Date: Nov 7, 2018
+ * Description: Add the string into the llArray of eotbl 
  */
 
 @ Raspberry Pi directives
@@ -27,12 +26,12 @@
 /*
  * Function Name: llTableAddString
  * Function Prototype: void llTableAddString( table_t *table, char *string )
- * Description: Set the 
- * Parameters: str - 
+ * Description: Add the string into the llArray of eotbl
+ * Parameters: str - The string to be added
+ *             table - Pointer to an eotbl
  * Side Effects: None
  * Error Conditions: 
- * Return Value: The llTableAddString key of str
- *
+ * Return Value: None
  * Registers used:
  *      r0 - arg 1 -- table_t *table
  *      r1 - arg 2 -- char *string

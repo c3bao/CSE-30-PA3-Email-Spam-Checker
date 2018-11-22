@@ -44,14 +44,15 @@ void testhash() {
      */
 
 
-    //test odd length strings
+    //test alpha-numeric strings
     str = "CSE30";
     TEST( hash(str) == hashC(str) );
 
     str = "PA3";
     TEST( hash(str) == hashC(str) );
 
-    str = "cse30pa3";
+    // Test numeric strings
+    str = "123456";
     TEST( hash(str) == hashC(str) );
 
     //test long string

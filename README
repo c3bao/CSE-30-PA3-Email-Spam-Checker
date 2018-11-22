@@ -1,0 +1,68 @@
+Filename: README
+Author: Chau Vu
+ID: cs30fgg
+
+Description: This is an interactive program that checks if an email is in a
+             a list of spam addresses or not.
+
+Build/compile:
+Use the Makefile to build/compile the files. Make sure the current directory
+is pa3, enter the command `make create` or `make search`. 
+This would compile all the necessary C and assembly files (the files in C_SRCS
+and ASM_SRCS in the Makefile) for the program to execute.
+
+
+Run:
+To run the program, inside the pa3 directory, execute the command
+`./create -h` and `./search -h` for the usage instructions.
+
+./create -i [inputFile] -o [outputFile] [-s size] will build the hashtables of
+email data from the inputFile and serialized the hashtables to the outputFile.
+An optional size argument may be passed to specify the size of the table.
+
+./search -i [inputFile] will create the hashtables and fills them by reading
+from the inputFile, which should be the outputFile created by ./create. It will
+then prompt a user for an address and print the appropriate response as to
+whether or not the email is a spam.
+
+
+Normal output:
+
+
+Abnormal output:
+
+Error conditions for create include:
+- Invalid arguments (size is not valid or out of range, invalid files, etc)
+- Missing infile and outfile flags
+- There are extra arguments
+- Error dynamically allocating memory
+
+Error conditions for search include:
+- Error opening the infile
+- No input file specified
+- There are extra arguments for input flag
+
+If an error condition occurs, the error will be printed to stderr, as well as
+the usage string.
+
+Testing:
+For create:
+I redirected the output of my program to a file MYSOL and redirected
+the output of the provided reference program to another file REFSOL.
+Then I used the command diff -c MYSOL REFSOL to check if there are 
+any difference between my output file and the reference output file.
+There should be no output for diff command if the two files are the same.
+I also wrote test cases for test files for each function.
+
+For search:
+I tested the functionality of search and its functions by inputing actual
+emails that exist in the email file and check that my output correctly
+identify those as spam emails. I can also test that my program output
+correct response for when an email is not spam (not in the emails file).
+
+
+README questions:
+1. I would convince him to act with integrity by reminding him of the
+   consequences for violating academic integrity, which can be more
+   severe than not doing well on one of the PA. I would offer to help him
+   understand the concepts and logic of the PA instead of showing him my code.

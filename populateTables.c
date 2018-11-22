@@ -45,6 +45,7 @@ void populateTables( table_t * htbl, table_t * rtbl, table_t * eotbl,
                 line[i] = tolower(line[i]);
             }
 
+            // Add the string to the hash tables
             bitTableAddString(htbl, ptr);
             bitTableAddString(rtbl, ptr);
             llTableAddString(eotbl, ptr);

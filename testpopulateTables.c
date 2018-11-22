@@ -43,8 +43,8 @@ void testpopulateTables() {
         .llArray = calloc( size, sizeof(linkedList_t) )
     };
 
-    // TEST EMAILS_10
-    FILE * dataFile = fopen("emails_1000", "rb");
+    // TEST EMAILS_10000
+    FILE * dataFile = fopen("emails_10000", "rb");
     populateTables(&htbl, &rtbl, &eotbl, dataFile);
 
     int count = 0;
@@ -60,7 +60,7 @@ void testpopulateTables() {
         }
     }
 
-    TEST(count == 1000);
+    TEST(count == 10000);
 
 }
 int main() {

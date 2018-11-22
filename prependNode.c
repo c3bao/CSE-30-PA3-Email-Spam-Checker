@@ -47,6 +47,7 @@ void prependNode( linkedList_t ** head, char * str) {
     // Copy the str into the allocated mem
     nodePtr->value = strncpy(strPtr, str, strlen(str));
     
+    // Insert the Node as head
     nodePtr->next = *head;
     (*head) = nodePtr;
     

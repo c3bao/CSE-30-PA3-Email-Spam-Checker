@@ -4,7 +4,7 @@
  * Userid: cs30fgg
  * Description: Frees all elements in the input linked list.
  * Date: Nov 9, 2018
- * Sources of Help: PA2 writeup
+ * Sources of Help: PA3 writeup
  */
 
 #include <string.h>
@@ -26,9 +26,14 @@ void freeLinkedList( linkedList_t * head) {
     
     linkedList_t * currNode = head;
 
+    // Traverse through the linked list
     while( currNode != NULL ) {
         linkedList_t * next = currNode->next;
+
+        // Free the value first
         free(currNode->value);
+
+        // Then free the node
         free(currNode);
         currNode = next;
     }

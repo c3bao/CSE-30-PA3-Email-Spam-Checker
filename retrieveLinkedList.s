@@ -64,6 +64,10 @@ retrieveLinkedList:
         ldr     r1, [r1, r2]            @ Load table->size
         ldr     r0, [fp, HASH_OFFSET]   @ Load hash from stack
         bl      getRemainder            @ getRemainder(hash, table->size)
+        ldr     r1, [fp, TABLE_OFFSET]  @ Load address of table
+        ldr     r2, =SizeOffset         @ Load offset of size
+        ldr     r2, [r2]
+        ldr     r1, [r1, r2]            @ Load table->size
         add     r0, r0, r1              @ add result to table->size
         bl      getRemainder            @ getRemainder(result, table->size)
         str     r0, [fp, IDX_OFFSET]    @ Store result in index
@@ -73,9 +77,10 @@ retrieveLinkedList:
         ldr     r2, [r2]
         ldr     r0, [r0, r2]            @ Load address of table->llArray
         ldr     r3, [fp, IDX_OFFSET]    @ Load index into r3
-        lsl     r3, r3, 2               @ convert index to bytes
+        lsl     r3, r3, 2               @ Convert index to bytes
         add     r0, r0, r3              @ &(table->llArray[index])
-        ldr     r0, [r0]                @ Get the value of table->llArray[idx]
+        ldr     r0, [r0]                @ Get the value
+
 
 @ Standard epilogue
         sub     sp, fp, FP_OFFSET       @ Set sp to top of saved registers
