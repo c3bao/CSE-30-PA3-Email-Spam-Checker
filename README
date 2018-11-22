@@ -27,7 +27,17 @@ whether or not the email is a spam.
 
 
 Normal output:
+./create -i emails_all -o dataFile
+./search -i dataFile
 
+Enter a word: Beethoven@hack.co (this is an actual email from the file
+emails_all, so it should be identified as a spam)
+Output: beethoven@hack.co is SPAM!
+
+Enter a word: randominput (since this isn't an actual email from the file, it
+would not be identified as spam. However, since my inputFile is way bigger than
+my table size, so some strings will share the same indices in the tables.)
+Output: randominput was found in 3 tables.
 
 Abnormal output:
 
@@ -59,6 +69,9 @@ I tested the functionality of search and its functions by inputing actual
 emails that exist in the email file and check that my output correctly
 identify those as spam emails. I can also test that my program output
 correct response for when an email is not spam (not in the emails file).
+I used the command ./search -i dataFile < emails_all > MYSOL and compare it with
+~/../public/pa3testSearch -i dataFile < emails_all > REFSOL. Then, I can ensure
+my program works properly by using diff MYSOL REFSOL.
 
 
 README questions:
