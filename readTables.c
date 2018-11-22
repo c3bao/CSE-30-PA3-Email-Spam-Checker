@@ -50,7 +50,7 @@ void readTables( FILE * inFile, table_t * htbl, table_t * rtbl,
     // Initialize the even odd hash table
     eotbl->hashFunction = evenOddHash;
     eotbl->size = size;
-    eotbl->bitArray = malloc( sizeof(linkedList_t) * size );
+    eotbl->llArray = malloc( sizeof(linkedList_t) * size );
 
     // Read the htbl contents
     fread(htbl->bitArray, sizeof(char), (htbl->size+CEILING)/BITS, inFile);
@@ -61,50 +61,48 @@ void readTables( FILE * inFile, table_t * htbl, table_t * rtbl,
     // Read eotbl contents
     char buf[BUFSIZ];
     int bufSize = 0;
-    int numNewBytes = 0;
-    char * ptr;
-    int curr = 0;
-    char * strPtr;
+    int numNewBytes = 0;    // Number of bytes fread reads in
+    char * ptr;     // Pointer to find NULL_TERMINATOR
+    int index = 0;
+    char * strPtr;  // Pointer used to keep track of string
+    int llidx = 0;  //linkedList array index
 
     while( (numNewBytes = fread(buf + bufSize, 1,
                     BUFSIZ - bufSize, inFile)) > 0 ) {
+        //printf("BufSize:%d\n", bufSize);
         bufSize += numNewBytes;
-        int llidx = 0;  // Index of the linkedList array
-
         ptr = buf;      // Pointer to iterate
         strPtr = buf;   // Pointer used to keep track of strings
-
-        while( curr < sizeof(buf) ) {
+        int temp = bufSize;
+        index = 0;
+        while( index < temp ) {
             // If there is a \0, increment the index in llArray
             if( *strPtr == NULL_TERMINATOR ) {
                 llidx++;
-                curr++;
+                index++;
                 strPtr++;
+                bufSize--;
             }
 
             // If encounter a non null character
             else {
-                ptr = strPtr + 1;
+                ptr = strPtr;
                 // Find the next \0
-                while( *ptr != NULL_TERMINATOR ) {
+                while( *ptr != NULL_TERMINATOR && index < temp ) {
                     ptr++;
-                    curr++;
+                    index++;
                 }
-                // If reach end of file and string is not null terminated,
-                // use memmove to move to the front of buf
-/*
-                if( curr == sizeof(buf) && *ptr != NULL_TERMINATOR ) {
-                    memmove(buf, buf + (BUFSIZ - bufSize), bufSize );
-                    break;
-                }
-*/
-                prependNode( &(eotbl->llArray[llidx]) , strPtr );
-                strPtr = ptr + 1;
-                curr++;
 
-                bufSize -= strlen(strPtr);
+                // If the string is complete, prepend it to the llArray
+                if( *ptr == NULL_TERMINATOR) {
+                    prependNode( &(eotbl->llArray[llidx]) , strPtr );
+                    bufSize -= (strlen(strPtr)+1);
+                    strPtr = ptr + 1;
+                    index++;
+                }
             }
 
+        //printf("BufSize:%d\n", bufSize);
         }
 
         if( bufSize > 0 ) {
@@ -112,8 +110,14 @@ void readTables( FILE * inFile, table_t * htbl, table_t * rtbl,
         }
 
     }
-
-    fclose(inFile);
-
+   
 }
 
+                // If reach end of file and string is not null terminated,
+                // use memmove to move to the front of buf
+                /*
+                   if( index == sizeof(buf) && *ptr != NULL_TERMINATOR ) {
+                   memmove(buf, buf + (BUFSIZ - bufSize), bufSize );
+                   break;
+                   }
+                */

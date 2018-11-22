@@ -44,6 +44,11 @@ void launchUserQuery( table_t * htbl, table_t * rtbl, table_t * eotbl) {
             str[i] = tolower(str[i]);
         }
 
+        if( *ptr == NULL_TERMINATOR ) {
+            printf(USER_PROMPT);
+            continue;
+        }
+
         // Count number of times str appears in the tables
         int tableCount = checkTables(ptr, htbl, rtbl, eotbl);
 
@@ -59,9 +64,10 @@ void launchUserQuery( table_t * htbl, table_t * rtbl, table_t * eotbl) {
         }
 
         // If string not found
-        if( tableCount == 0 ) {
+        else {
             printf(WORD_NOT_FOUND, str);
         }
+
         printf(USER_PROMPT);
     }
     printf("%c", NEW_LINE);
