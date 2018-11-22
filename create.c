@@ -173,7 +173,7 @@ int main(int argc, char* argv[] ) {
     table_t rtbl = {
         .hashFunction = revHash,
         .size = size,
-        .bitArray = calloc( sizeof(char), (size+7)/8 )
+        .bitArray = calloc( sizeof(char), (size+CEILING)/BITS )
     };
 
     // If calloc fails, free the memory and return

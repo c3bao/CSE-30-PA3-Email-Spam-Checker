@@ -16,6 +16,7 @@
         .equ    STR_OFFSET, -12
         .equ    HASH_OFFSET, -16
         .equ    IDX_OFFSET, -20
+        .equ    INT_SHIFT, 2
 
         .global llTableAddString            @ Specify llTableAddString as a global symbol
 
@@ -69,7 +70,7 @@ llTableAddString:
         ldr     r2, [r2]
         ldr     r0, [r0, r2]              @ Load address of table->llArray
         ldr     r3, [fp, IDX_OFFSET]    @ Load index into r3
-        lsl     r3, r3, 2               @ convert index to bytes
+        lsl     r3, r3, INT_SHIFT       @ convert index to bytes
         add     r0, r0, r3              @ Calculate &(table->llArray[index])
         ldr     r1, [fp, STR_OFFSET]    @ Load string to r1
         bl      prependNode
